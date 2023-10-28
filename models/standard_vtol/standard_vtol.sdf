@@ -1,23 +1,23 @@
-<?xml version='1.0'?>
-<sdf version='1.5'>
+<?xml version="1.0"?>
+<sdf version='1.6'>
   <model name='standard_vtol'>
     <pose>0 0 0.246 0 0 0</pose>
     <link name='base_link'>
       <pose>0 0 0 0 0 0</pose>
       <inertial>
         <pose>0 0 0 0 0 0</pose>
-        <mass>1.5</mass>
+        <mass>3</mass>
         <inertia>
-          <ixx>0.197563</ixx>
+          <ixx>0.477708333333</ixx>
           <ixy>0</ixy>
           <ixz>0</ixz>
-          <iyy>0.1458929</iyy>
+          <iyy>0.341666666667</iyy>
           <iyz>0</iyz>
-          <izz>0.1477</izz>
+          <izz>0.811041666667</izz>
         </inertia>
       </inertial>
       <collision name='base_link_collision'>
-        <pose>-0.01 0 -0.08 0 0 0</pose>
+        <pose>0 0 -0.07 0 0 0</pose>
         <geometry>
           <box>
             <size>0.55 2.144 0.05</size>
@@ -26,13 +26,15 @@
         <surface>
           <contact>
             <ode>
-              <max_vel>10</max_vel>
-              <min_depth>0.01</min_depth>
+              <kp>100000</kp>
+              <kd>1.0</kd>
+              <max_vel>0.1</max_vel>
+              <min_depth>0.001</min_depth>
             </ode>
           </contact>
-          <!--<friction>
+          <friction>
             <ode/>
-          </friction>-->
+          </friction>
         </surface>
       </collision>
       <visual name='base_link_visual'>
@@ -142,24 +144,65 @@
       <velocity_decay/>
       <self_collide>0</self_collide>
     </link>
-    <link name='standard_vtol/imu_link'>
-      <pose>0 0 0 0 0 0</pose>
+    <link name='standard_vtol/gps_link'>
       <inertial>
-        <pose>0 0 0 0 0 0</pose>
-        <mass>0.015</mass>
-        <inertia>
-          <ixx>1e-05</ixx>
-          <ixy>0</ixy>
-          <ixz>0</ixz>
-          <iyy>1e-05</iyy>
-          <iyz>0</iyz>
-          <izz>1e-05</izz>
-        </inertia>
-      </inertial>
-      <sensor name="imu_sensor" type="imu">
-        <pose>0 0 0 3.141593 0 0</pose>
-        <always_on>1</always_on>
-        <update_rate>1000.0</update_rate>
+          <pose>0 0 0 0 0 0</pose>
+          <mass>0.015</mass>
+          <inertia>
+            <ixx>0.00001</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.00002</iyy>
+            <iyz>0</iyz>
+            <izz>0.00002</izz>
+          </inertia>
+        </inertial>
+      <sensor name="gps_sensor" type="gps">
+        <pose>0 0 0  0 0 0</pose>
+        <update_rate>10.0</update_rate>
+        <always_on>true</always_on>
+        <gps>
+          <position_sensing>
+            <horizontal>
+              <noise type="gaussian_quantized">
+                <mean>0</mean>
+                <stddev>1</stddev>
+                <bias_mean>3</bias_mean>
+                <bias_stddev>1</bias_stddev>
+                <precision>0.5</precision>
+              </noise>
+            </horizontal>
+            <vertical>
+              <noise type="gaussian_quantized">
+                <mean>0</mean>
+                <stddev>1</stddev>
+                <bias_mean>3</bias_mean>
+                <bias_stddev>1</bias_stddev>
+                <precision>1.0</precision>
+              </noise>
+            </vertical>
+          </position_sensing>
+          <velocity_sensing>
+            <horizontal>
+              <noise type="gaussian_quantized">
+                <mean>0</mean>
+                <stddev>0.1</stddev>
+                <bias_mean>0.1</bias_mean>
+                <bias_stddev>0.1</bias_stddev>
+                <precision>0.1</precision>
+              </noise>
+            </horizontal>
+            <vertical>
+              <noise type="gaussian_quantized">
+                <mean>0</mean>
+                <stddev>0.2</stddev>
+                <bias_mean>0.2</bias_mean>
+                <bias_stddev>0.2</bias_stddev>
+                <precision>0.2</precision>
+              </noise>
+            </vertical>
+          </velocity_sensing>
+        </gps>
       </sensor>
     </link>
     <joint name='standard_vtol/imu_joint' type='revolute'>
@@ -180,6 +223,25 @@
         <use_parent_model_frame>1</use_parent_model_frame>
       </axis>
     </joint>
+    <link name='standard_vtol/imu_link'>
+      <pose>0 0 0 0 0 0</pose>
+      <inertial>
+        <mass>0.015</mass>
+        <inertia>
+          <ixx>0.00001</ixx>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyy>0.00002</iyy>
+          <iyz>0</iyz>
+          <izz>0.00002</izz>
+        </inertia>
+      </inertial>
+      <sensor name="imu_sensor" type="imu">
+        <pose>0 0 0 3.141593 0 0</pose>
+        <always_on>1</always_on>
+        <update_rate>1000</update_rate>
+      </sensor>
+    </link>
     <link name='rotor_0'>
       <pose>0.35 -0.35 0.07 0 0 0</pose>
       <inertial>
@@ -287,7 +349,7 @@
         </geometry>
         <material>
           <script>
-            <name>Gazebo/DarkGrey</name>
+            <name>Gazebo/Blue</name>
             <uri>__default__</uri>
           </script>
         </material>
@@ -353,7 +415,7 @@
         </geometry>
         <material>
           <script>
-            <name>Gazebo/DarkGrey</name>
+            <name>Gazebo/Blue</name>
             <uri>__default__</uri>
           </script>
         </material>
@@ -419,7 +481,7 @@
         </geometry>
         <material>
           <script>
-            <name>Gazebo/DarkGrey</name>
+            <name>Gazebo/Blue</name>
             <uri>__default__</uri>
           </script>
         </material>
@@ -692,7 +754,7 @@
       <cda_stall>-0.9233984055</cda_stall>
       <cma_stall>0</cma_stall>
       <cp>-0.05 0.3 0.05</cp>
-      <area>0.12</area>
+      <area>0.50</area>
       <air_density>1.2041</air_density>
       <forward>1 0 0</forward>
       <upward>0 0 1</upward>
@@ -700,7 +762,7 @@
       <control_joint_name>
         left_elevon_joint
       </control_joint_name>
-      <control_joint_rad_to_cl>-0.5</control_joint_rad_to_cl>
+      <control_joint_rad_to_cl>-1.0</control_joint_rad_to_cl>
     </plugin>
     <plugin name="right_wing" filename="libLiftDragPlugin.so">
       <a0>0.05984281113</a0>
@@ -712,7 +774,7 @@
       <cda_stall>-0.9233984055</cda_stall>
       <cma_stall>0</cma_stall>
       <cp>-0.05 -0.3 0.05</cp>
-      <area>0.12</area>
+      <area>0.50</area>
       <air_density>1.2041</air_density>
       <forward>1 0 0</forward>
       <upward>0 0 1</upward>
@@ -720,7 +782,7 @@
       <control_joint_name>
         right_elevon_joint
       </control_joint_name>
-      <control_joint_rad_to_cl>-0.5</control_joint_rad_to_cl>
+      <control_joint_rad_to_cl>-1.0</control_joint_rad_to_cl>
     </plugin>
     <plugin name="elevator" filename="libLiftDragPlugin.so">
       <a0>-0.2</a0>
@@ -740,7 +802,7 @@
       <control_joint_name>
         elevator_joint
       </control_joint_name>
-      <control_joint_rad_to_cl>-4.0</control_joint_rad_to_cl>
+      <control_joint_rad_to_cl>-12.0</control_joint_rad_to_cl>
     </plugin>
     <plugin name="rudder" filename="libLiftDragPlugin.so">
       <a0>0.0</a0>
@@ -758,75 +820,6 @@
       <upward>0 1 0</upward>
       <link_name>base_link</link_name>
     </plugin>
-    <!-- <plugin name='front_right_motor_model' filename='libgazebo_motor_model.so'>
-      <robotNamespace></robotNamespace>
-      <jointName>rotor_0_joint</jointName>
-      <linkName>rotor_0</linkName>
-      <turningDirection>ccw</turningDirection>
-      <timeConstantUp>0.0125</timeConstantUp>
-      <timeConstantDown>0.025</timeConstantDown>
-      <maxRotVelocity>1500</maxRotVelocity>
-      <motorConstant>8.54858e-06</motorConstant>
-      <momentConstant>0.06</momentConstant>
-      <commandSubTopic>/gazebo/command/motor_speed</commandSubTopic>
-      <motorNumber>0</motorNumber>
-      <rotorDragCoefficient>0.000806428</rotorDragCoefficient>
-      <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
-      <motorSpeedPubTopic>/motor_speed/0</motorSpeedPubTopic>
-      <rotorVelocitySlowdownSim>20</rotorVelocitySlowdownSim>
-    </plugin> -->
-    <!-- <plugin name='back_left_motor_model' filename='libgazebo_motor_model.so'>
-      <robotNamespace></robotNamespace>
-      <jointName>rotor_1_joint</jointName>
-      <linkName>rotor_1</linkName>
-      <turningDirection>ccw</turningDirection>
-      <timeConstantUp>0.0125</timeConstantUp>
-      <timeConstantDown>0.025</timeConstantDown>
-      <maxRotVelocity>1500</maxRotVelocity>
-      <motorConstant>8.54858e-06</motorConstant>
-      <momentConstant>0.06</momentConstant>
-      <commandSubTopic>/gazebo/command/motor_speed</commandSubTopic>
-      <motorNumber>1</motorNumber>
-      <rotorDragCoefficient>0.000806428</rotorDragCoefficient>
-      <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
-      <motorSpeedPubTopic>/motor_speed/1</motorSpeedPubTopic>
-      <rotorVelocitySlowdownSim>20</rotorVelocitySlowdownSim>
-    </plugin> -->
-    <!-- <plugin name='front_left_motor_model' filename='libgazebo_motor_model.so'>
-      <robotNamespace></robotNamespace>
-      <jointName>rotor_2_joint</jointName>
-      <linkName>rotor_2</linkName>
-      <turningDirection>cw</turningDirection>
-      <timeConstantUp>0.0125</timeConstantUp>
-      <timeConstantDown>0.025</timeConstantDown>
-      <maxRotVelocity>1500</maxRotVelocity>
-      <motorConstant>8.54858e-06</motorConstant>
-      <momentConstant>0.06</momentConstant>
-      <commandSubTopic>/gazebo/command/motor_speed</commandSubTopic>
-      <motorNumber>2</motorNumber>
-      <rotorDragCoefficient>0.000806428</rotorDragCoefficient>
-      <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
-      <motorSpeedPubTopic>/motor_speed/2</motorSpeedPubTopic>
-      <rotorVelocitySlowdownSim>20</rotorVelocitySlowdownSim>
-    </plugin> -->
-    <!-- <plugin name='back_right_motor_model' filename='libgazebo_motor_model.so'>
-      <robotNamespace></robotNamespace>
-      <jointName>rotor_3_joint</jointName>
-      <linkName>rotor_3</linkName>
-      <turningDirection>cw</turningDirection>
-      <timeConstantUp>0.0125</timeConstantUp>
-      <timeConstantDown>0.025</timeConstantDown>
-      <maxRotVelocity>1500</maxRotVelocity>
-      <motorConstant>8.54858e-06</motorConstant>
-      <momentConstant>0.06</momentConstant>
-      <commandSubTopic>/gazebo/command/motor_speed</commandSubTopic>
-      <motorNumber>3</motorNumber>
-      <rotorDragCoefficient>0.000806428</rotorDragCoefficient>
-      <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
-      <motorSpeedPubTopic>/motor_speed/3</motorSpeedPubTopic>
-      <rotorVelocitySlowdownSim>20</rotorVelocitySlowdownSim>
-    </plugin> -->
-    
     <plugin name="rotor_0_blade_1" filename="libLiftDragPlugin.so">
       <a0>0.3</a0>
       <alpha_stall>1.4</alpha_stall>
@@ -841,7 +834,7 @@
       <cp>0.084 0 0</cp>
       <forward>0 1 0</forward>
       <upward>0 0 1</upward>
-      <link_name>rotor_0</link_name>
+      <link_name>standard_vtol::rotor_0</link_name>
     </plugin>
     <plugin name="rotor_0_blade_2" filename="libLiftDragPlugin.so">
       <a0>0.3</a0>
@@ -857,9 +850,8 @@
       <cp>-0.084 0 0</cp>
       <forward>0 -1 0</forward>
       <upward>0 0 1</upward>
-      <link_name>rotor_0</link_name>
+      <link_name>standard_vtol::rotor_0</link_name>
     </plugin>
-
     <plugin name="rotor_1_blade_1" filename="libLiftDragPlugin.so">
       <a0>0.3</a0>
       <alpha_stall>1.4</alpha_stall>
@@ -874,7 +866,7 @@
       <cp>0.084 0 0</cp>
       <forward>0 1 0</forward>
       <upward>0 0 1</upward>
-      <link_name>rotor_1</link_name>
+      <link_name>standard_vtol::rotor_1</link_name>
     </plugin>
     <plugin name="rotor_1_blade_2" filename="libLiftDragPlugin.so">
       <a0>0.3</a0>
@@ -890,9 +882,8 @@
       <cp>-0.084 0 0</cp>
       <forward>0 -1 0</forward>
       <upward>0 0 1</upward>
-      <link_name>rotor_1</link_name>
+      <link_name>standard_vtol::rotor_1</link_name>
     </plugin>
-
     <plugin name="rotor_2_blade_1" filename="libLiftDragPlugin.so">
       <a0>0.3</a0>
       <alpha_stall>1.4</alpha_stall>
@@ -907,7 +898,7 @@
       <cp>0.084 0 0</cp>
       <forward>0 -1 0</forward>
       <upward>0 0 1</upward>
-      <link_name>rotor_2</link_name>
+      <link_name>standard_vtol::rotor_2</link_name>
     </plugin>
     <plugin name="rotor_2_blade_2" filename="libLiftDragPlugin.so">
       <a0>0.3</a0>
@@ -923,9 +914,8 @@
       <cp>-0.084 0 0</cp>
       <forward>0 1 0</forward>
       <upward>0 0 1</upward>
-      <link_name>rotor_2</link_name>
+      <link_name>standard_vtol::rotor_2</link_name>
     </plugin>
-
     <plugin name="rotor_3_blade_1" filename="libLiftDragPlugin.so">
       <a0>0.3</a0>
       <alpha_stall>1.4</alpha_stall>
@@ -940,7 +930,7 @@
       <cp>0.084 0 0</cp>
       <forward>0 -1 0</forward>
       <upward>0 0 1</upward>
-      <link_name>rotor_3</link_name>
+      <link_name>standard_vtol::rotor_3</link_name>
     </plugin>
     <plugin name="rotor_3_blade_2" filename="libLiftDragPlugin.so">
       <a0>0.3</a0>
@@ -956,10 +946,10 @@
       <cp>-0.084 0 0</cp>
       <forward>0 1 0</forward>
       <upward>0 0 1</upward>
-      <link_name>rotor_3</link_name>
+      <link_name>standard_vtol::rotor_3</link_name>
     </plugin>
-    <plugin name="propeller_blade_1" filename="libLiftDragPlugin.so">
-      <a0>0.30</a0>
+    <plugin name="rotor_puller_blade_1" filename="libLiftDragPlugin.so">
+      <a0>0.3</a0>
       <alpha_stall>1.4</alpha_stall>
       <cla>4.2500</cla>
       <cda>0.10</cda>
@@ -972,10 +962,10 @@
       <cp>0.084 0 0</cp>
       <forward>0 -1 0</forward>
       <upward>0 0 -1</upward>
-      <link_name>rotor_puller</link_name>
+      <link_name>standard_vtol::rotor_puller</link_name>
     </plugin>
-    <plugin name="propeller_blade_2" filename="libLiftDragPlugin.so">
-      <a0>0.30</a0>
+    <plugin name="rotor_puller_blade_2" filename="libLiftDragPlugin.so">
+      <a0>0.3</a0>
       <alpha_stall>1.4</alpha_stall>
       <cla>4.2500</cla>
       <cda>0.10</cda>
@@ -988,165 +978,15 @@
       <cp>-0.084 0 0</cp>
       <forward>0 1 0</forward>
       <upward>0 0 -1</upward>
-      <link_name>rotor_puller</link_name>
+      <link_name>standard_vtol::rotor_puller</link_name>
     </plugin>
-    <!-- <plugin name='puller' filename='libgazebo_motor_model.so'>
-      <robotNamespace></robotNamespace>
-      <jointName>rotor_puller_joint</jointName>
-      <linkName>rotor_puller</linkName>
-      <turningDirection>cw</turningDirection>
-      <timeConstantUp>0.0125</timeConstantUp>
-      <timeConstantDown>0.025</timeConstantDown>
-      <maxRotVelocity>3500</maxRotVelocity>
-      <motorConstant>8.54858e-06</motorConstant>
-      <momentConstant>0.01</momentConstant>
-      <commandSubTopic>/gazebo/command/motor_speed</commandSubTopic>
-      <motorNumber>4</motorNumber>
-      <rotorDragCoefficient>8.06428e-05</rotorDragCoefficient>
-      <rollingMomentCoefficient>1e-06</rollingMomentCoefficient>
-      <motorSpeedPubTopic>/motor_speed/4</motorSpeedPubTopic>
-      <rotorVelocitySlowdownSim>20</rotorVelocitySlowdownSim>
-    </plugin> -->
-    <!-- <plugin name='gazebo_imu_plugin' filename='libgazebo_imu_plugin.so'>
-      <robotNamespace></robotNamespace>
-      <linkName>standard_vtol/imu_link</linkName>
-      <imuTopic>/imu</imuTopic>
-      <gyroscopeNoiseDensity>0.0003394</gyroscopeNoiseDensity>
-      <gyroscopeRandomWalk>3.8785e-05</gyroscopeRandomWalk>
-      <gyroscopeBiasCorrelationTime>1000.0</gyroscopeBiasCorrelationTime>
-      <gyroscopeTurnOnBiasSigma>0.0087</gyroscopeTurnOnBiasSigma>
-      <accelerometerNoiseDensity>0.004</accelerometerNoiseDensity>
-      <accelerometerRandomWalk>0.006</accelerometerRandomWalk>
-      <accelerometerBiasCorrelationTime>300.0</accelerometerBiasCorrelationTime>
-      <accelerometerTurnOnBiasSigma>0.196</accelerometerTurnOnBiasSigma>
-    </plugin> -->
-    <!--
-    <plugin name='wind_plugin' filename='libgazebo_wind_plugin.so'>
-      <frameId>base_link</frameId>
-      <linkName>base_link</linkName>
-      <robotNamespace/>
-      <xyzOffset>1 0 0</xyzOffset>
-      <windDirection>0 1 0</windDirection>
-      <windForceMean>0.7</windForceMean>
-      <windGustDirection>0 0 0</windGustDirection>
-      <windGustDuration>0</windGustDuration>
-      <windGustStart>0</windGustStart>
-      <windGustForceMean>0</windGustForceMean>
-    </plugin>
-    -->
-    <!-- <plugin name="gps_plugin" filename="libgazebo_gps_plugin.so">
-        <robotNamespace></robotNamespace>
-        <gpsNoise>true</gpsNoise>
-    </plugin> -->
-    <!-- <plugin name='mavlink_interface' filename='libgazebo_mavlink_interface.so'>
-      <robotNamespace></robotNamespace>
-      <imuSubTopic>/imu</imuSubTopic>
-      <gpsSubTopic>/gps</gpsSubTopic>
-      <mavlink_addr>INADDR_ANY</mavlink_addr>
-      <mavlink_udp_port>14560</mavlink_udp_port>
-      <serialEnabled>false</serialEnabled>
-      <serialDevice>/dev/ttyACM0</serialDevice>
-      <baudRate>921600</baudRate>
-      <qgc_addr>INADDR_ANY</qgc_addr>
-      <qgc_udp_port>14550</qgc_udp_port>
-      <hil_mode>false</hil_mode>
-      <hil_state_level>false</hil_state_level>
-      <motorSpeedCommandPubTopic>/gazebo/command/motor_speed</motorSpeedCommandPubTopic>
-      <control_channels>
-        <channel name="rotor0">
-          <input_index>0</input_index>
-          <input_offset>0</input_offset>
-          <input_scaling>1500</input_scaling>
-          <zero_position_disarmed>0</zero_position_disarmed>
-          <zero_position_armed>0</zero_position_armed>
-          <joint_control_type>velocity</joint_control_type>
-          <joint_name>rotor_0_joint</joint_name>
-        </channel>
-        <channel name="rotor1">
-          <input_index>1</input_index>
-          <input_offset>0</input_offset>
-          <input_scaling>1500</input_scaling>
-          <zero_position_disarmed>0</zero_position_disarmed>
-          <zero_position_armed>0</zero_position_armed>
-          <joint_control_type>velocity</joint_control_type>
-          <joint_name>rotor_1_joint</joint_name>
-        </channel>
-        <channel name="rotor2">
-          <input_index>2</input_index>
-          <input_offset>0</input_offset>
-          <input_scaling>1500</input_scaling>
-          <zero_position_disarmed>0</zero_position_disarmed>
-          <zero_position_armed>0</zero_position_armed>
-          <joint_control_type>velocity</joint_control_type>
-          <joint_name>rotor_2_joint</joint_name>
-        </channel>
-        <channel name="rotor3">
-          <input_index>3</input_index>
-          <input_offset>0</input_offset>
-          <input_scaling>1500</input_scaling>
-          <zero_position_disarmed>0</zero_position_disarmed>
-          <zero_position_armed>0</zero_position_armed>
-          <joint_control_type>velocity</joint_control_type>
-          <joint_name>rotor_3_joint</joint_name>
-        </channel>
-        <channel name="rotor4">
-          <input_index>4</input_index>
-          <input_offset>0</input_offset>
-          <input_scaling>3500</input_scaling>
-          <zero_position_disarmed>0</zero_position_disarmed>
-          <zero_position_armed>0</zero_position_armed>
-          <joint_control_type>velocity</joint_control_type>
-          <joint_name>rotor_puller_joint</joint_name>
-        </channel>
-        <channel name="left_elevon">
-          <input_index>5</input_index>
-          <input_offset>0</input_offset>
-          <input_scaling>1</input_scaling>
-          <zero_position_disarmed>0</zero_position_disarmed>
-          <zero_position_armed>0</zero_position_armed>
-          <joint_control_type>position_kinematic</joint_control_type>
-          <joint_name>left_elevon_joint</joint_name>
-        </channel>
-        <channel name="right_elevon">
-          <input_index>6</input_index>
-          <input_offset>0</input_offset>
-          <input_scaling>1</input_scaling>
-          <zero_position_disarmed>0</zero_position_disarmed>
-          <zero_position_armed>0</zero_position_armed>
-          <joint_control_type>position_kinematic</joint_control_type>
-          <joint_name>right_elevon_joint</joint_name>
-        </channel>
-        <channel name="elevator">
-          <input_index>7</input_index>
-          <input_offset>0</input_offset>
-          <input_scaling>1</input_scaling>
-          <zero_position_disarmed>0</zero_position_disarmed>
-          <zero_position_armed>0</zero_position_armed>
-          <joint_control_type>position_kinematic</joint_control_type>
-          <joint_name>elevator_joint</joint_name>
-        </channel>
-      </control_channels>
-      <left_elevon_joint>
-        left_elevon_joint
-      </left_elevon_joint>
-      <right_elevon_joint>
-        right_elevon_joint
-      </right_elevon_joint>
-      <elevator_joint>
-        elevator_joint
-      </elevator_joint>
-    </plugin> -->
-    <plugin name="arducopter_plugin" filename="libArduPilotPlugin.so">
+    <plugin name="ardupilot_plugin" filename="libArduPilotPlugin.so">
       <fdm_addr>127.0.0.1</fdm_addr>
       <fdm_port_in>9002</fdm_port_in>
       <fdm_port_out>9003</fdm_port_out>
-      <!--
-          Require by APM :
-          Only change model and gazebo from XYZ to XY-Z coordinates
-      -->
       <modelXYZToAirplaneXForwardZDown>0 0 0 3.141593 0 0</modelXYZToAirplaneXForwardZDown>
       <gazeboXYZToNED>0 0 0 3.141593 0 0</gazeboXYZToNED>
-      <imuName>standard_vtol/imu_link::imu_sensor</imuName>
+      <imuName>standard_vtol::standard_vtol/imu_link::imu_sensor</imuName>
       <connectionTimeoutMaxCount>5</connectionTimeoutMaxCount>
       <control channel="0">
           <multiplier>1</multiplier>
@@ -1159,7 +999,7 @@
           <i_min>0</i_min>
           <cmd_max>1</cmd_max>
           <cmd_min>-1</cmd_min>
-        <jointName>left_elevon_joint</jointName>
+        <jointName>standard_vtol::left_elevon_joint</jointName>
       </control>
       <control channel="1">
           <multiplier>1</multiplier>
@@ -1172,7 +1012,7 @@
           <i_min>0</i_min>
           <cmd_max>1</cmd_max>
           <cmd_min>-1</cmd_min>
-        <jointName>right_elevon_joint</jointName>
+        <jointName>standard_vtol::right_elevon_joint</jointName>
       </control>
       <control channel="2">
           <multiplier>1</multiplier>
@@ -1185,20 +1025,20 @@
           <i_min>0</i_min>
           <cmd_max>1</cmd_max>
           <cmd_min>-1</cmd_min>
-        <jointName>elevator_joint</jointName>
+        <jointName>standard_vtol::elevator_joint</jointName>
       </control>
       <control channel="3">
         <multiplier>1000</multiplier>
-        <offset>0</offset>
+        <offset>0</offset> <!-- Not sure why ardupilot commands 0.1 when not armed and not in FF -->  
         <type>VELOCITY</type>
-        <p_gain>10</p_gain>
-        <i_gain>0</i_gain>
+        <p_gain>0.2</p_gain>
+        <i_gain>0.2</i_gain>
         <d_gain>0</d_gain>
         <i_max>0</i_max>
         <i_min>0</i_min>
-        <cmd_max>20.0</cmd_max>
-        <cmd_min>0.0</cmd_min>
-        <jointName>rotor_puller_joint</jointName>
+        <cmd_max>2.5</cmd_max>
+        <cmd_min>-2.5</cmd_min>
+        <jointName>standard_vtol::rotor_puller_joint</jointName>
         <rotorVelocitySlowdownSim>1</rotorVelocitySlowdownSim>
       </control>
       <control channel="4">
@@ -1212,9 +1052,8 @@
         <i_min>0</i_min>
         <cmd_max>2.5</cmd_max>
         <cmd_min>-2.5</cmd_min>
-        <jointName>rotor_0_joint</jointName>
+        <jointName>standard_vtol::rotor_0_joint</jointName>
         <rotorVelocitySlowdownSim>1</rotorVelocitySlowdownSim>
-        <multiplier>1</multiplier>
       </control>
       <control channel="5">
         <multiplier>1000</multiplier>
@@ -1227,7 +1066,7 @@
         <i_min>0</i_min>
         <cmd_max>2.5</cmd_max>
         <cmd_min>-2.5</cmd_min>
-        <jointName>rotor_1_joint</jointName>
+        <jointName>standard_vtol::rotor_1_joint</jointName>
         <rotorVelocitySlowdownSim>1</rotorVelocitySlowdownSim>
       </control>
       <control channel="6">
@@ -1241,7 +1080,7 @@
         <i_min>0</i_min>
         <cmd_max>2.5</cmd_max>
         <cmd_min>-2.5</cmd_min>
-        <jointName>rotor_2_joint</jointName>
+        <jointName>standard_vtol::rotor_2_joint</jointName>
         <rotorVelocitySlowdownSim>1</rotorVelocitySlowdownSim>
       </control>
       <control channel="7">
@@ -1255,11 +1094,10 @@
         <i_min>0</i_min>
         <cmd_max>2.5</cmd_max>
         <cmd_min>-2.5</cmd_min>
-        <jointName>rotor_3_joint</jointName>
+        <jointName>standard_vtol::rotor_3_joint</jointName>
         <rotorVelocitySlowdownSim>1</rotorVelocitySlowdownSim>
       </control>
     </plugin>
-
     <static>0</static>
   </model>
 </sdf>
