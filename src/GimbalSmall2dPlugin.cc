@@ -28,7 +28,7 @@ using namespace std;
 GZ_REGISTER_MODEL_PLUGIN(GimbalSmall2dPlugin)
 
 /// \brief Private data class
-class gazebo::GimbalSmall2dPluginPrivate
+class gazebo::GimbalSmall2dPluginPrivate  //建立私有变量
 {
   /// \brief Callback when a command string is received.
   /// \param[in] _msg Mesage containing the command string
@@ -37,28 +37,28 @@ class gazebo::GimbalSmall2dPluginPrivate
   /// \brief A list of event connections
   public: std::vector<event::ConnectionPtr> connections;
 
-  /// \brief Subscriber to the gimbal command topic
+  /// \brief Subscriber to the gimbal command topic 云台命令主题订阅者
   public: transport::SubscriberPtr sub;
 
-  /// \brief Publisher to the gimbal status topic
+  /// \brief Publisher to the gimbal status topic   云台状态主题的发布者
   public: transport::PublisherPtr pub;
 
-  /// \brief Parent model of this plugin
-  public: physics::ModelPtr model;
+  /// \brief Parent model of this plugin    该插件的父模型
+  public: physics::ModelPtr model;  //私有模型变量
 
-  /// \brief Joint for tilting the gimbal
-  public: physics::JointPtr tiltJoint;
+  /// \brief Joint for tilting the gimbal   云台倾斜接头
+  public: physics::JointPtr tiltJoint;  //私有关节变量
 
-  /// \brief Command that updates the gimbal tilt angle
+  /// \brief Command that updates the gimbal tilt angle   更新云台倾斜角度的命令
   public: double command = IGN_PI_2;
 
-  /// \brief Pointer to the transport node
+  /// \brief Pointer to the transport node    指向传输节点的指针
   public: transport::NodePtr node;
 
-  /// \brief PID controller for the gimbal
+  /// \brief PID controller for the gimbal    云台PID控制器
   public: common::PID pid;
 
-  /// \brief Last update sim time
+  /// \brief Last update sim time   最后更新SIM时间
   public: common::Time lastUpdateTime;
 };
 
@@ -70,20 +70,29 @@ GimbalSmall2dPlugin::GimbalSmall2dPlugin()
 }
 
 /////////////////////////////////////////////////
-void GimbalSmall2dPlugin::Load(physics::ModelPtr _model,
-  sdf::ElementPtr _sdf)
+//利用Load函数加载模型以及sdf文件的标签元素，这些参数是插件作用于模型的桥梁。
+//可以把Load方法看作是主函数
+void GimbalSmall2dPlugin::Load(physics::ModelPtr _model,  //输入模型变量
+  sdf::ElementPtr _sdf) //sdf模型变量
 {
-  this->dataPtr->model = _model;
+  this->dataPtr->model = _model;  //模型赋值
 
   std::string jointName = "tilt_joint";
-  if (_sdf->HasElement("joint"))
+  if (_sdf->HasElement("joint"))  
   {
     jointName = _sdf->Get<std::string>("joint");
   }
-  this->dataPtr->tiltJoint = this->dataPtr->model->GetJoint(jointName);
+  this->dataPtr->tiltJoint = this->dataPtr->model->GetJoint(jointName); //关节赋值
+
+  this->dataPtr->PID = common::PID(0.1, 0, 0);
+
+  this->dataPtr->tiltJoint = SetVelocityPID(this->dataPtr->tiltJoint->GetScopedName(), this->pid);
+
+  this->dataPtr->tiltJoint = SetVelocityTarget(this->dataPtr->tiltJoint->GetScopedName(), 10.0);
+
   if (!this->dataPtr->tiltJoint)
   {
-    std::string scopedJointName = _model->GetScopedName() + "::" + jointName;
+    std::string scopedJointName = _model->GetScopedName() + "::" + jointName; //获取完全限定名称
     gzwarn << "joint [" << jointName
            << "] not found, trying again with scoped joint name ["
            << scopedJointName << "]\n";

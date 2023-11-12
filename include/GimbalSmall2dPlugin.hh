@@ -20,6 +20,7 @@
 #include "gazebo/common/Plugin.hh"
 #include "gazebo/physics/physics.hh"
 #include "gazebo/util/system.hh"
+#include "ros/ros.h"
 
 namespace gazebo
 {
