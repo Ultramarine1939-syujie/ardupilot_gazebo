@@ -1,5 +1,7 @@
 build/
 Build/
+ros/devel/
+ros/.catkin_workspace
 bin/
 lib/
 msg_gen/
