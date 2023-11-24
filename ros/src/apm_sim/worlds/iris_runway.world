@@ -92,7 +92,7 @@
 
     <model name="iris">
       <include>
-        <uri>model://iris_with_standoffs_cam</uri>
+        <uri>model://iris_with_standoffs_realsense</uri>
       </include>
       <pose> 0 0 0 0 0 0</pose>
     </model>

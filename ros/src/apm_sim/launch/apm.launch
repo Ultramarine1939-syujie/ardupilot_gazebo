@@ -11,7 +11,7 @@
 	<arg name="mavros_ns" default="/"/>
 	<arg name="config_yaml" default="$(find mavros)/launch/apm_config.yaml" />
 
-	<include file="$(find iq_sim)/launch/mavros_node.launch">
+	<include file="$(find apm_sim)/launch/mavros_node.launch">
 		<arg name="pluginlists_yaml" value="$(find mavros)/launch/apm_pluginlists.yaml" />
 		<arg name="config_yaml" value="$(arg config_yaml)" />
 		<arg name="mavros_ns" value="$(arg mavros_ns)"/>
