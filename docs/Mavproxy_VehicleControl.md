@@ -41,7 +41,7 @@ position X Y Z
 6、以四元数格式设置所需的姿态
 
 ```
-attitude Q0 Q1 Q2 Q3
+attitude Q0 Q1 Q2 Q3 thrust
 ```
 
 7、根据上一次鼠标在地图上的单击以及以 North-East-Down 格式 (m/s) 表示的目标速度设置目标位置。使用全局框架。
