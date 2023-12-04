@@ -100,3 +100,5 @@ CATKIN_IGNORE
 
 # Ignore mercurial config directory
 .hg
+
+ros/src/CMakeLists.txt
