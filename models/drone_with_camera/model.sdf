@@ -58,6 +58,7 @@
       </plugin>
     </sensor>
     </link>
+    
     <joint name="camera_mount" type="fixed">
       <child>cam_link</child>
       <parent>iris::base_link</parent>
