@@ -2069,5 +2069,13 @@
         <projection_type>perspective</projection_type>
       </camera>
     </gui>
+
+    <model name="iris">
+      <include>
+        <uri>model://drone_with_d435</uri>
+      </include>
+      <pose> 3 0 0.5 0 0 0</pose>
+    </model>
+
   </world>
 </sdf>

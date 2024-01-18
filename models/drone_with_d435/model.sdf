@@ -7,7 +7,7 @@
 
     <include>
       <uri>model://D435i</uri>
-      <pose>0.1 0 0.15 1.57 0 1.57 </pose>
+      <pose>0.1 0 0.2 1.57 0 1.57 </pose>
     </include>
 
     <link name="backcam_link">
@@ -48,7 +48,7 @@
       </sensor>
     </link>
 
-    <joint name="camera_mount" type="fixed">
+    <joint name="backcamera_mount" type="fixed">
       <child>backcam_link</child>
       <parent>iris::base_link</parent>
       <axis>
@@ -60,7 +60,7 @@
       </axis>
     </joint>
 
-    <joint name="camera_mount" type="revolute">
+    <joint name="camera_mount" type="fixed">
       <child>D435i::camera_link</child>
       <parent>iris::base_link</parent>
       <axis>

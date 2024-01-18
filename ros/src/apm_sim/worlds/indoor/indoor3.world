@@ -21,7 +21,7 @@
           <geometry>
             <plane>
               <normal>0 0 1</normal>
-              <size>100 100</size>
+              <size>300 100</size>
             </plane>
           </geometry>
           <surface>
@@ -46,7 +46,7 @@
           <geometry>
             <plane>
               <normal>0 0 1</normal>
-              <size>100 100</size>
+              <size>300 100</size>
             </plane>
           </geometry>
           <material>
@@ -1281,5 +1281,13 @@
         <projection_type>perspective</projection_type>
       </camera>
     </gui>
+
+    <model name="iris">
+      <include>
+        <uri>model://drone_with_d435</uri>
+      </include>
+      <pose> 0 0 0.5 0 0 0</pose>
+    </model>
+
   </world>
 </sdf>

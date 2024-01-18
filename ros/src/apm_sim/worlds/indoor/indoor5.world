@@ -5622,5 +5622,13 @@
         </link>
         <pose frame=''>0 0 5 0 0 0</pose>
       </model>
+
+    <model name="iris">
+      <include>
+        <uri>model://drone_with_lidar</uri>
+      </include>
+      <pose> 0 0 0.5 0 0 0</pose>
+    </model>
+
   </world>
 </sdf>

@@ -6158,7 +6158,7 @@
 
     <model name="iris">
       <include>
-        <uri>model://drone_with_realsense</uri>
+        <uri>model://drone_with_d435</uri>
       </include>
       <pose> 0 0 0 0 0 0</pose>
     </model>
