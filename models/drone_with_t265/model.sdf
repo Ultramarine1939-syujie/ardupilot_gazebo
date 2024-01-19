@@ -1,12 +1,12 @@
 <?xml version='1.0'?>
 <sdf version="1.6" >
-  <model name="drone_with_d435">
+  <model name="drone_with_t265">
     <include>
       <uri>model://iris_base</uri>
     </include>
 
     <include>
-      <uri>model://D435i</uri>
+      <uri>model://T265</uri>
       <pose>0.1 0 0.2 1.57 0 1.57 </pose>
     </include>
 
@@ -61,7 +61,7 @@
     </joint>
 
     <joint name="camera_mount" type="fixed">
-      <child>D435i::camera_link</child>
+      <child>T265::base_link</child>
       <parent>iris::base_link</parent>
       <axis>
         <xyz>0 0 1</xyz>
@@ -72,7 +72,7 @@
       </axis>
     </joint>
  
-    <!-- plugins -->
+    <!-- plugins 这里开始可以不用看-->
     <plugin name="rotor_0_blade_1" filename="libLiftDragPlugin.so">
       <a0>0.3</a0>
       <alpha_stall>1.4</alpha_stall>
