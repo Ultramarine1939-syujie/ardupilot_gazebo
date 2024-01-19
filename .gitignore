@@ -102,3 +102,5 @@ CATKIN_IGNORE
 .hg
 
 ros/src/CMakeLists.txt
+ros/build
+ros/devel
