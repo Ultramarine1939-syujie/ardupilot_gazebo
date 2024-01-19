@@ -1,0 +1,7 @@
+roscd hector_slam_launch
+sudo cp ~/XTDrone/sensing/slam/laser_slam/hector_slam/hector_slam_xtdrone.launch launch/
+sudo cp ~/XTDrone/sensing/slam/laser_slam/hector_slam/mapping_xtdrone.rviz rviz_cfg/mapping_xtdrone.rviz
+roscd hector_imu_attitude_to_tf/
+sudo cp ~/XTDrone/sensing/slam/laser_slam/hector_slam/hector_imu_xtdrone.launch launch/
+roscd hector_mapping/
+sudo cp ~/XTDrone/sensing/slam/laser_slam/hector_slam/hector_mapping_xtdrone.launch launch/
