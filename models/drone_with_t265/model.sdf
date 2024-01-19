@@ -7,7 +7,7 @@
 
     <include>
       <uri>model://T265</uri>
-      <pose>0.1 0 0.2 1.57 0 1.57 </pose>
+      <pose>0.15 0 -0.3 0 0 0 </pose>
     </include>
 
     <link name="backcam_link">
@@ -60,8 +60,8 @@
       </axis>
     </joint>
 
-    <joint name="camera_mount" type="fixed">
-      <child>T265::base_link</child>
+    <joint name="camera_mount" type="revolute">
+      <child>t265::base_footprint</child>
       <parent>iris::base_link</parent>
       <axis>
         <xyz>0 0 1</xyz>

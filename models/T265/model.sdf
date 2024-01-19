@@ -123,9 +123,9 @@
       </sensor>
       <gravity>1</gravity>
       <sensor name='camera_imu' type='imu'>
-        <always_on>1</always_on>
+        <always_on>true</always_on>
         <update_rate>30</update_rate>
-        <visualize>0</visualize>
+        <visualize>true</visualize>
         <plugin name='imu_plugin' filename='libgazebo_ros_imu_sensor.so'>
           <topicName>camera/gyro/sample</topicName>
           <bodyName>camera_pose_frame</bodyName>
