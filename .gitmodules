@@ -4,3 +4,6 @@
 [submodule "models_gazebo"]
 	path = models_gazebo
 	url = https://github.com/Ultramarine1939-syujie/models_gazebo
+[submodule "ros/src/iq_gnc"]
+	path = ros/src/iq_gnc
+	url = https://github.com/Intelligent-Quads/iq_gnc.git
