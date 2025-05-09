@@ -16,8 +16,11 @@ mavlink stream -d /dev/ttyS1 -s ATTITUDE_QUATERNION -r 100
 2.在终端中(26对应data_raw、31对应data)
 
 ```
-rosrun mavros mavcmd long 511 26 10000 0 0 0 0 0		#data_raw
-rosrun mavros mavcmd long 511 31 10000 0 0 0 0 0		#data
+rosrun mavros mavcmd long 511 26 10000 0 0 0 0 0		#data_raw   100Hz
+rosrun mavros mavcmd long 511 31 10000 0 0 0 0 0		#data   100Hz
+
+rosrun mavros mavcmd long 511 26 5000 0 0 0 0 0		#data_raw   200Hz
+rosrun mavros mavcmd long 511 31 5000 0 0 0 0 0		#data   200Hz
 ```
 
 3、直接修改参数：https://ardupilot.org/dev/docs/mavlink-requesting-data.html

@@ -104,3 +104,9 @@ CATKIN_IGNORE
 ros/src/CMakeLists.txt
 ros/build
 ros/devel
+scripts/eeprom.bin
+scripts/mav.parm
+scripts/mav.tlog.raw
+scripts/mav.tlog
+scripts/terrain
+scripts/logs
