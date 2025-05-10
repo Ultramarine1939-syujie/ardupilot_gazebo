@@ -1,6 +1,6 @@
 [submodule "ros/src/realsense_ros_gazebo"]
 	path = ros/src/realsense_ros_gazebo
-	url = https://gitee.com/ultramarine1939/realsense_ros_gazebo
+	url = https://github.com/Ultramarine1939-syujie/realsense_ros_gazebo
 [submodule "models_gazebo"]
 	path = models_gazebo
 	url = https://github.com/Ultramarine1939-syujie/models_gazebo
